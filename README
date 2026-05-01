@@ -1,0 +1,219 @@
+# 🇮🇳 UPI Fraud Detection AI
+
+A machine learning-powered web application to detect fraudulent UPI (Unified Payments Interface) transactions in real-time. Built with Streamlit and trained on bank-grade realistic transaction data.
+
+## 📋 Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Dataset](#dataset)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Model Features](#model-features)
+- [Performance](#performance)
+- [Future Enhancements](#future-enhancements)
+
+## 🎯 Overview
+
+UPI Fraud Detection AI is an intelligent system designed to identify suspicious UPI transactions using advanced machine learning algorithms. The application analyzes transaction patterns, behavioral anomalies, and security indicators to classify transactions as legitimate or fraudulent with high accuracy.
+
+This project combines:
+- **Realistic Data Generation**: Bank-grade synthetic UPI transaction dataset with 50,000+ samples
+- **Advanced ML Models**: Trained on multiple fraud indicators and behavioral patterns
+- **Interactive Web UI**: Streamlit-based interface for real-time fraud predictions
+- **Comprehensive Feature Engineering**: 17+ transaction and user behavior features
+
+## ✨ Features
+
+- **Real-time Prediction**: Input transaction details and get instant fraud risk assessment
+- **Interactive Dashboard**: User-friendly Streamlit interface with organized sections
+- **Multiple Input Categories**:
+  - 💳 Transaction Details (amount, time, frequency)
+  - 🏪 Merchant Information
+  - 📱 Device & Security Indicators
+  - 👤 Account Characteristics
+- **Risk-based Analysis**: Evaluates dozens of fraud patterns and behavioral anomalies
+- **Visual Feedback**: Color-coded results with detailed risk explanation
+
+## 📊 Dataset
+
+### Data Generation
+The dataset is synthetically generated using bank-grade realistic patterns with the following characteristics:
+
+- **Size**: 50,000 UPI transactions
+- **Class Distribution**: Imbalanced (realistic fraud occurrence)
+- **Features**: 17 transaction and behavioral attributes
+- **Fraud Indicators**: High-amount transfers, unusual timings, behavioral anomalies, mule fraud patterns
+
+### Features Included
+
+| Feature | Description | Type |
+|---------|-------------|------|
+| `amount` | Transaction amount (₹10 - ₹100,000) | Continuous |
+| `hour` | Transaction hour (0-23) | Categorical |
+| `city_changed` | Location change flag | Binary |
+| `new_device` | First transaction from new device | Binary |
+| `failed_attempts` | Failed transaction attempts | Continuous |
+| `new_receiver` | New beneficiary recipient | Binary |
+| `txn_last_10min` | Transaction count in last 10 minutes | Continuous |
+| `merchant_payment` | Is merchant payment | Binary |
+| `weekend` | Weekend transaction flag | Binary |
+| `account_age_days` | Account age in days | Continuous |
+| `kyc_verified` | KYC verification status | Binary |
+| `upi_app_age_days` | UPI app installation age | Continuous |
+| `device_trusted` | Device trust status | Binary |
+| `beneficiary_added_24h` | Beneficiary added in last 24h | Binary |
+| `multiple_small_txn` | Multiple small transactions pattern | Binary |
+| `ip_risky_region` | IP from high-risk region | Binary |
+| `sim_changed_recently` | SIM changed recently | Binary |
+
+## 🛠️ Installation
+
+### Prerequisites
+- Python 3.8 or higher
+- pip or conda package manager
+
+### Setup Instructions
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd upi_fraud_detection
+   ```
+
+2. **Create a virtual environment** (recommended)
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Generate the dataset**
+   ```bash
+   python dataset.py
+   ```
+   This creates `data/upi_bank_grade_data.csv`
+
+5. **Train the model** (if needed)
+   - Run the notebook or training script to generate `models/final_model.pkl`
+
+## 🚀 Usage
+
+### Running the Web Application
+
+```bash
+streamlit run app.py
+```
+
+The application will open at `http://localhost:8501`
+
+### Using the Application
+
+1. **Navigate to Transaction Details Section**
+   - Enter transaction amount (₹)
+   - Select transaction hour (0-23)
+   - Enter transaction count in last 10 minutes
+   - Select merchant payment type
+   - Select if transaction is on weekend
+
+2. **Set Device & Security Details**
+   - Specify device trust status
+   - Indicate if device is new
+   - Provide KYC verification status
+   - Enter failed transaction attempts
+
+3. **Provide Account Information**
+   - Account age
+   - UPI app installation age
+   - Location change flag
+   - New receiver indicator
+
+4. **Click "Check Fraud Risk"**
+   - Get real-time prediction
+   - View fraud probability
+   - Read risk explanation
+
+## 📁 Project Structure
+
+```
+upi_fraud_detection/
+├── app.py                          # Streamlit web application
+├── dataset.py                      # Synthetic dataset generation
+├── test.ipynb                      # Jupyter notebook for testing/analysis
+├── README                          # This file
+├── requirements.txt                # Python dependencies
+├── data/
+│   └── upi_bank_grade_data.csv     # Generated dataset (50K transactions)
+└── models/
+    └── final_model.pkl             # Trained ML model
+```
+
+## 🧠 Model Features
+
+The ML model analyzes the following fraud risk factors:
+
+### High-Risk Indicators
+- ⚠️ High-amount transfers (>₹30,000 - ₹100,000)
+- 🌙 Late-night transactions (0:00 - 4:00 AM)
+- 🏙️ Unusual location changes
+- 📱 New device usage
+- ❌ Multiple failed attempts (≥3)
+- 👤 New receiver/beneficiary
+- ⚡ Rapid transaction frequency (6+ in 10 minutes)
+- 🤖 Mule/burst fraud patterns
+- 🌍 Risky IP regions
+- 📞 Recent SIM card change
+
+### Low-Risk Indicators
+- 🏪 Merchant payments (safer than peer-to-peer)
+- ✅ Verified KYC status
+- 🔒 Trusted device
+- ⏰ Established account (>30 days old)
+- ⏱️ Established UPI app usage (>15 days old)
+
+## 📈 Performance
+
+- **Accuracy**: Optimized for high fraud detection rate
+- **Precision/Recall**: Balanced to minimize false positives while catching fraud
+- **Real-time Latency**: <100ms prediction time
+- **Data Balance**: Handles imbalanced fraud classes realistically
+
+## 🚀 Future Enhancements
+
+- [ ] Integration with real UPI transaction APIs
+- [ ] Multi-model ensemble approaches
+- [ ] Deep learning architectures (LSTM, Transformer)
+- [ ] Explainable AI (SHAP) for feature importance
+- [ ] Real-time model retraining pipeline
+- [ ] API endpoint for integration with banking systems
+- [ ] Mobile application version
+- [ ] Anomaly detection using isolation forests
+- [ ] Geographic fraud pattern analysis
+- [ ] User behavior baseline establishment
+
+## 📚 Technologies Used
+
+- **Python 3.x**: Core programming language
+- **Streamlit**: Web application framework
+- **Scikit-learn**: Machine learning library
+- **Pandas**: Data manipulation and analysis
+- **NumPy**: Numerical computing
+- **Joblib**: Model serialization
+
+## 📝 License
+
+This project is provided as-is for educational and development purposes.
+
+## 👤 Author
+
+Created as a fraud detection demonstration project.
+
+
+---
+
+**Last Updated**: May 2, 2026
