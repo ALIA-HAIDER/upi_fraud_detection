@@ -1,3 +1,6 @@
+# Machine Learning Models
+models/*.pkl
+
 # Virtual environments
 venv/
 .env/
